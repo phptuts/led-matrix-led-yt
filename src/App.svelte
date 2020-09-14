@@ -9,7 +9,8 @@
     leds = [...leds];
   }
   $: arduinoMessage =
-    leds
+    [...leds]
+      .reverse()
       .reduce((acc, value) => {
         return acc + value.map((l) => (l ? "1" : "0")).join(":") + ":";
       }, "")
@@ -34,6 +35,7 @@
     margin: 5px;
     border: solid gray 1px;
     background-color: #fff;
+    cursor: pointer;
   }
   div.on {
     background-color: #aa0000;
