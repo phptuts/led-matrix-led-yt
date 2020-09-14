@@ -8,6 +8,12 @@
     leds[row][column] = !leds[row][column];
     leds = [...leds];
   }
+  $: arduinoMessage =
+    leds
+      .reduce((acc, value) => {
+        return acc + value.map((l) => (l ? "1" : "0")).join(":") + ":";
+      }, "")
+      .slice(0, -1) + "@";
 </script>
 
 <style>
@@ -32,8 +38,16 @@
   div.on {
     background-color: #aa0000;
   }
-  h1 {
+  h1,
+  h2 {
     text-align: center;
+  }
+  section#message {
+    width: 500px;
+    word-wrap: break-word;
+    border: solid gray 1px;
+    padding: 5px;
+    margin: 10px auto;
   }
 </style>
 
@@ -51,3 +65,7 @@
     </section>
   {/each}
 </main>
+
+<h2>Arduino Message</h2>
+
+<section id="message">{arduinoMessage}</section>
